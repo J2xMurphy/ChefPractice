@@ -1,13 +1,14 @@
 #include "main.h"
 
 int main(int argc, char *argv[]){
-	std::string temp = "Number of inputs are " + std::to_string(argc) + ".";
-	logger(temp);
+	// Temp string in case sql testing is initiated.
+	std::string temp;
 	std::string argstr[argc];
 	// A loop through all the arguments provided to tell which
 	// values are option keys and which are relevant values
 	int i = 0;
 	int ix = 0;
+	
 	if (argc>1){
 		std::string args[argc+1];
 		for(i=1; i<argc;i++){
@@ -29,6 +30,13 @@ int main(int argc, char *argv[]){
 			// If -h is given, display help and quit.
 			else if (args[i] == "-h"){
 				std::cout << help_notice << std::endl;
+				return 1;
+			}
+			
+			else if (args[i] == "-t"){
+				std::cout << "Sql testing initiated." << std::endl;
+				temp = getdb("no");
+				std::cout << temp << std::endl;
 				return 1;
 			}
 			
