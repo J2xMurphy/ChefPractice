@@ -33,10 +33,12 @@ int main(int argc, char *argv[]){
 				return 1;
 			}
 			
+			// if -t is given, go into SQL mode and execute test
 			else if (args[i] == "-t"){
 				std::cout << "Sql testing initiated." << std::endl;
 				temp = getdb("no");
-				std::cout << temp << std::endl;
+				logger(temp);
+				logEnd();
 				return 1;
 			}
 			

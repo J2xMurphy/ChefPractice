@@ -1,9 +1,10 @@
 #include "chef.h"
+//Base function for testing
 void chef(){
 	logger("works");
 }
 
-// handles preprocessing of byte2bit
+// Handles preprocessing of byte2bit
 // Tells how many bits are in a byte
 void chefb2b(std::string istring[]){
 	logger("Recieved as Byte2Bit");
@@ -13,7 +14,7 @@ void chefb2b(std::string istring[]){
 	return;
 }
 
-//handles preprocessing of palindrome
+//Handles preprocessing of palindrome
 //Tells if a string is a palindrome
 void chefpali(std::string istring[]){
 	logger("Recieved as Palindrome");
