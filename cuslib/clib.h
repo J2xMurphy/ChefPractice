@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iostream>
 #include <sqlite3.h>
+#include <vector>
 
 // A class for storing sql testing information.
 class testio{
@@ -13,6 +14,17 @@ class testio{
 		int id = -1; //			   id of test
 		std::string input = "";//  input string of test
 		std::string output = "";// Desired output of test
+		
+	// To set the values of the testio
+	void set(int sid, std::string sinput, std::string soutput){
+		id = sid;
+		input = sinput;
+		output = soutput;
+	}
+	// return reading the values of the testio
+	std::string read(){
+		return (std::to_string(id)+":"+input+":"+output);
+	}
 };
 
 // A class for logging settings.
@@ -36,7 +48,7 @@ void logger(std::string message = "",logStatistics = logstats);  //logger for st
 void logger(int message,logStatistics = logstats);				 //logger for integers
 
 //Get tests from sql database, Chonky code
-std::string getdb(std::string input);
+std::vector<testio> getdb(std::string input);
 
 // logend carries out writing log memory to finishing log
 void logEnd();

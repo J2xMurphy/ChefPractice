@@ -8,7 +8,7 @@ int main(int argc, char *argv[]){
 	// values are option keys and which are relevant values
 	int i = 0;
 	int ix = 0;
-	
+	std::vector<testio> main_tests;
 	if (argc>1){
 		std::string args[argc+1];
 		for(i=1; i<argc;i++){
@@ -35,14 +35,15 @@ int main(int argc, char *argv[]){
 			
 			// if -t is given, go into SQL mode and execute test
 			else if (args[i] == "-t"){
-				std::cout << "Sql testing initiated." << std::endl;
-				temp = getdb("no");
+				logger("Sql testing initiated.");
+				main_tests = getdb("no");
+				logger("pass: "+std::to_string(main_tests.size()));
 				logger(temp);
 				logEnd();
 				return 1;
 			}
 			
-			// If not a option key, saves arg to list.
+			// If not a flag, saves arg to list for arg selection.
 			else{
 				argstr[ix] += argv[i];
 				ix++;

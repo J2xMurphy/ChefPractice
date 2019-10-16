@@ -36,7 +36,7 @@ void logEnd(){
 }
 
 // get tests from sql database
-std::string getdb(std::string input){
+std::vector<testio> getdb(std::string input){
 	sqlite3* db; 
     int error = 0; 
 	
@@ -44,24 +44,21 @@ std::string getdb(std::string input){
     error = sqlite3_open("cuslib/Byte2Bit/tests.db", &db); 
     if (error) { 
         std::cerr << "Error when opening database. " << sqlite3_errmsg(db) << std::endl; 
-        return "error"; 
+		std::vector<testio> nop;
+        return nop; 
     } 
     else
         logger("Successfully opened database."); 
 	
-	// Get the numer of tests.
-	int count = 0;
-	count = sqlite3_exec(db, "select count(*) from tests;", getcount, &count, NULL);
-	
-	// Init testio[count] array, and populate it with tests
-	testio tests[count];
+	// Init testio vector, and populate it with tests
+	std::vector<testio> tests;
 	sqlite3_exec(db, "select * from tests;", testnumbers, &tests, NULL);
 	
 	//Close the database
     sqlite3_close(db); 
-
-	// TODO find a way to return the array without breaking prior code.
-	return "Hello World";
+	logger("Success: "+std::to_string(tests.size()));
+	
+	return tests;
 }
 
 // convert string to integer
@@ -90,14 +87,18 @@ static int testnumbers(void* database, int argc, char** argv, char** azColName)
 { 
 	// TODO Set security standards on the argvs
 	
-	//Transfer a void* to a testio**
-	testio *temp = (testio*)database;
+	//Transfer a void* to a vector*
+	std::vector<testio> *temp = (std::vector<testio>*) database;
 	
-	// Set tests to sql results
-	temp[str2int(argv[0])].id = str2int(argv[0]);
-	temp[str2int(argv[0])].input = argv[1];
-	temp[str2int(argv[0])].output = argv[2];
+	//make a new testio for adding to the vector
+	testio ntio;
+	ntio.id = str2int(argv[0]);
+	ntio.input = argv[1];
+	ntio.output = argv[2];
 	
+	logger(ntio.read());
+	//add the testio to the vector
+	temp->push_back(ntio);
 	//------------------------------------------------
     return 0; 
 } 
