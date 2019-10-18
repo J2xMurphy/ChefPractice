@@ -6,21 +6,23 @@ void chef(){
 
 // Handles preprocessing of byte2bit
 // Tells how many bits are in a byte
-void chefb2b(std::string istring[]){
+int chefb2b(std::string istring){
 	logger("Recieved as Byte2Bit");
-	int newint = str2int(istring[1]);
+	int newint = str2int(istring);
 	newint = byte2bit(newint);
-	sl(istring[1] + " bytes are equivalent to " + std::to_string(newint) + " bits of space.");
-	return;
+	sl(istring + " bytes are equivalent to " + std::to_string(newint) + " bits of space.");
+	return newint;
 }
 
 //Handles preprocessing of palindrome
 //Tells if a string is a palindrome
-void chefpali(std::string istring[]){
+int chefpali(std::string istring){
 	logger("Recieved as Palindrome");
-	if (isPalindrome(istring[1]))
-		sl(istring[1] + " is a palindrome.");
-	else
-		sl(istring[1] + " is not a palindrome.");
-	return;
+	if (isPalindrome(istring)){
+		sl(istring + " is a palindrome.");
+		return 1;
+	}else{
+		sl(istring + " is not a palindrome.");
+		return 0;
+	}
 }

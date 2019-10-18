@@ -37,11 +37,14 @@ void logEnd(){
 
 // get tests from sql database
 std::vector<testio> getdb(std::string input){
+	std::cout << input <<std::endl;
 	sqlite3* db; 
     int error = 0; 
-	
+	input += "/tests.db";
+	char tstr[input.size()+1];
+	strcpy(tstr,input.c_str());
 	// Open SQL file, return on error.
-    error = sqlite3_open("cuslib/Byte2Bit/tests.db", &db); 
+    error = sqlite3_open(tstr, &db); 
     if (error) { 
         std::cerr << "Error when opening database. " << sqlite3_errmsg(db) << std::endl; 
 		std::vector<testio> nop;
@@ -56,7 +59,7 @@ std::vector<testio> getdb(std::string input){
 	
 	//Close the database
     sqlite3_close(db); 
-	logger("Success: "+std::to_string(tests.size()));
+	logger("Successfully retrieved: "+std::to_string(tests.size())+" tests from database.");
 	
 	return tests;
 }
@@ -91,10 +94,10 @@ static int testnumbers(void* database, int argc, char** argv, char** azColName)
 	std::vector<testio> *temp = (std::vector<testio>*) database;
 	
 	//make a new testio for adding to the vector
-	testio ntio;
-	ntio.id = str2int(argv[0]);
-	ntio.input = argv[1];
-	ntio.output = argv[2];
+	testio ntio(str2int(argv[0]),argv[1],argv[2]);
+//	ntio.id = str2int(argv[0]);
+//	ntio.input = argv[1];
+//	ntio.output = argv[2];
 	
 	logger(ntio.read());
 	//add the testio to the vector

@@ -10,8 +10,8 @@
 void chef();
 
 //Byte2Bit
-void chefb2b(std::string[]);
+int chefb2b(std::string[]);
 
 //Palindrome
-void chefpali(std::string[]);
+int chefpali(std::string[]);
 #endif

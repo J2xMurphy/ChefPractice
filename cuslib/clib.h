@@ -7,6 +7,7 @@
 #include <iostream>
 #include <sqlite3.h>
 #include <vector>
+#include <cstring>
 
 // A class for storing sql testing information.
 class testio{
@@ -16,10 +17,24 @@ class testio{
 		std::string output = "";// Desired output of test
 		
 	// To set the values of the testio
+	testio(int sid = -1, std::string sinput = "", std::string soutput = "NULL"){
+		id = sid;
+		input = sinput;
+		output = soutput;
+	}
 	void set(int sid, std::string sinput, std::string soutput){
 		id = sid;
 		input = sinput;
 		output = soutput;
+	}
+	int getid(){
+		return id;
+	}
+	std::string getin(){
+		return input;
+	}
+	std::string getout(){
+		return output;
 	}
 	// return reading the values of the testio
 	std::string read(){
