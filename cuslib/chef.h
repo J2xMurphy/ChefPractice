@@ -6,12 +6,13 @@
 #include "clib.h"
 // Prep Include
 #include <iostream>
+#include <string>
 // Funcions
 void chef();
 
 //Byte2Bit
-int chefb2b(std::string[]);
+int chefb2b(std::string istring,std::string ostring);
 
 //Palindrome
-int chefpali(std::string[]);
+int chefpali(std::string istring,std::string ostring);
 #endif

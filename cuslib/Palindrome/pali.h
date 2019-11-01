@@ -1,3 +1,6 @@
+#ifndef CLPAL
+#define CLPAL
+
 #include <string>
 #include <stdexcept>
 #include <iostream>
@@ -5,3 +8,5 @@
 #include <stdio.h>
 
 #include "../clib.h"
+
+#endif

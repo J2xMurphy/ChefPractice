@@ -11,7 +11,6 @@ void sl(int message){
 	logmem += std::to_string(message)+"\n";
 }
 
-
 // Normal logger for strings
 void logger(std::string message,logStatistics logstats){
 	if (logstats.verbose)
@@ -70,8 +69,7 @@ int str2int(std::string input){
 	return output;
 }
 
-
-//SQL wrappers
+//SQL wrappers UNUSED
 int resql_open(sqlite3* db){
     int error = 0; 
     error = sqlite3_open("cuslib/Byte2Bit/tests.db", &db); 
@@ -95,9 +93,6 @@ static int testnumbers(void* database, int argc, char** argv, char** azColName)
 	
 	//make a new testio for adding to the vector
 	testio ntio(str2int(argv[0]),argv[1],argv[2]);
-//	ntio.id = str2int(argv[0]);
-//	ntio.input = argv[1];
-//	ntio.output = argv[2];
 	
 	logger(ntio.read());
 	//add the testio to the vector

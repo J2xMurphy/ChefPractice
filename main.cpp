@@ -8,15 +8,15 @@ int main(int argc, char *argv[]){
 	deFunct mainarg;
 	// A loop through all the arguments provided to tell which
 	// values are option keys and which are relevant values
-	int i,ix = 0;
+	int i = 0;
+	int ix = 0;
+	int t_pass = 0;
 	bool use_external = false;
 	std::vector<testio> main_tests;
 	if (argc>1){
 		std::string args[argc+1];
 		for(i=1; i<argc;i++){
 			args[i] = argv[i]; 
-			logger((std::to_string(i)+":"+args[i]));
-			
 			// If -v is given prints all logs to the terminal in runtime.
 			if (args[i] == "-v"){
 				logstats.verbose = true;
@@ -51,6 +51,7 @@ int main(int argc, char *argv[]){
 				argstr[ix] += argv[i];
 				ix++;
 			}
+			logger((std::to_string(i)+":"+args[i]));
 		}
 		// Prints a few things before starting
 		logger("Arguments Read.");
@@ -61,43 +62,39 @@ int main(int argc, char *argv[]){
 		// Convert any legal input to testio format
 		if (use_external == true){
 			main_tests = getdb("cuslib/"+mainarg.loc());
-			logger("pass: "+std::to_string(main_tests.size()));
+			logger("Continuing with "+std::to_string(main_tests.size())+" tests on main.");
 			ix = 3;
 		}else{
 			testio ntio(0,argstr[1],"NULL");
+			if (ix >= 3)
+				ntio.output = argstr[2];
 			main_tests.push_back(ntio);
 		}
 		
 		// First level argc checking, for single arg functions
 		// A should be case statement for possible arguments.
 		for(testio tio:main_tests){
-			logger(tio.input);
-			if (ix<1){
+			//logger(tio.input);
+			if (ix == 0){
+				sl("No inputs detected.");
+				logEnd();
+			}
+			else if (ix == 1){
 				sl("No arguments given.");
 				logEnd();
 			}
-			else if (argstr[0] == "one"){
-				chef();
-				logger("One called");
+			else if (ix == 2){
+				mainarg.getfunc()(tio.input,tio.output);
 			}
-			//Second level argc checking for double arg functions
-			else if (ix<2){
-				sl("Not enough arguments given.");
-			}
-			else if (mainarg.get() == b2b.get()){
-				chefb2b(tio.getin());
-			}
-			else if (mainarg.get() == pali.get()){
-				chefpali(tio.getin());
-			}
-			// If all argc checking fails
-			else{
-				sl("No valid arguments given.");
+			else if (ix == 3){
+				t_pass+=mainarg.getfunc()(tio.input,tio.output);
 			}
 		}
 	}else{
 		sl("No arguments given.\n");
 	}
+	if (ix = 3)
+		sl(std::to_string(t_pass)+ " of "+ std::to_string(main_tests.size())+ " tests passed.");
 	logEnd();
 	return 1;
 }

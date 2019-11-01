@@ -1,3 +1,5 @@
+#ifndef CLCP
+#define CLCP
 #include "cuslib/chef.cpp"
 #include "cuslib/clib.cpp"
 #include "stdio.h"
@@ -6,32 +8,44 @@
 #include <string>
 #include <algorithm>
 #include <vector>
+typedef int (* functiontype)(std::string istring,std::string ostring);
 
 class deFunct{// Class for holding directory data
+	private:
 	std::string name;
 	std::string dir;
+	functiontype cusfunc;
 	public:
-	deFunct(std::string tname, std::string tdir){
+	deFunct(std::string tname, std::string tdir, int (*f)(std::string,std::string)){
 		name = tname;
 		dir = tdir;
+		cusfunc = f;
 	}
-	deFunct(){
-		
-	}
+	
+//	Empty initializer for null initialization.
+	deFunct(){}
+//	returns the terminal input information given dring initialization.
 	std::string get(){
 		return name;
 	}
+//	returns the directory information given dring initialization.
+//  tables in the sql database files must be called tests.
 	std::string loc(){
 		return dir;
 	}
-	
+//	returns the function given in initialization.
+	functiontype getfunc(){
+		return cusfunc;
+	}
 };
 
 //void init();
 //List of all functions
+//To add to list, add a deFunct type, with args
+// ([Terminal input], [Code directory], [function to be called])
 std::vector<deFunct> allFunc;
-deFunct b2b("b2b", "Byte2Bit");
-deFunct pali("pali", "Palindrome");
+deFunct b2b("b2b", "Byte2Bit", chefb2b);
+deFunct pali("pali", "Palindrome", chefpali);
 
 void init(){
 	allFunc.push_back(b2b);
@@ -49,3 +63,4 @@ Functions:																		\n \
 one  []		  - Test case for no reason											\n \
 b2b  [int]    - calculates bits in bytes										\n \
 pali [string] - calculates whether or not a string is a palindrome.";
+#endif
