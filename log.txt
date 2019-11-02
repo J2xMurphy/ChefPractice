@@ -1,5 +1,0 @@
-pailindrome is not a palindrome.
-oko is a palindrome.
-racecar is a palindrome.
-Catac is a palindrome.
-4 of 4 tests passed.

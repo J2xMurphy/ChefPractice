@@ -43,13 +43,16 @@ class deFunct{// Class for holding directory data
 //List of all functions
 //To add to list, add a deFunct type, with args
 // ([Terminal input], [Code directory], [function to be called])
+// Define the preprocessor in the chef.cpp file.
 std::vector<deFunct> allFunc;
 deFunct b2b("b2b", "Byte2Bit", chefb2b);
 deFunct pali("pali", "Palindrome", chefpali);
+deFunct asq("asq","aSquare",chefasq);
 
 void init(){
 	allFunc.push_back(b2b);
 	allFunc.push_back(pali);
+	allFunc.push_back(asq);
 }
 
 // The help string for -h

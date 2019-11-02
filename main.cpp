@@ -71,6 +71,7 @@ int main(int argc, char *argv[]){
 			main_tests.push_back(ntio);
 		}
 		
+		logger("ix value:" +std::to_string(ix));
 		// First level argc checking, for single arg functions
 		// A should be case statement for possible arguments.
 		for(testio tio:main_tests){
@@ -93,7 +94,7 @@ int main(int argc, char *argv[]){
 	}else{
 		sl("No arguments given.\n");
 	}
-	if (ix = 3)
+	if (ix == 3)
 		sl(std::to_string(t_pass)+ " of "+ std::to_string(main_tests.size())+ " tests passed.");
 	logEnd();
 	return 1;

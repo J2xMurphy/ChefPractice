@@ -7,8 +7,7 @@ void chef(){
 // Handles preprocessing of byte2bit
 // Tells how many bits are in a byte
 int chefb2b(std::string istring, std::string ostring){
-	ostring = "NULL" ? "0" : ostring;
-	
+	ostring = (ostring=="NULL") ? "0" : ostring;
 	logger("Recieved as Byte2Bit");
 	int newint = str2int(istring);
 	newint = byte2bit(newint);
@@ -20,7 +19,6 @@ int chefb2b(std::string istring, std::string ostring){
 //Tells if a string is a palindrome
 int chefpali(std::string istring, std::string ostring){
 	ostring = (ostring=="NULL") ? "true": ostring;
-	
 	logger("Recieved as Palindrome");
 	std::cout << ostring << std::endl;
 	if (isPalindrome(istring)){
@@ -35,5 +33,31 @@ int chefpali(std::string istring, std::string ostring){
 			return 1;
 		}
 		return 0;
+	}
+}
+
+//Handles preprocessing of aSquare
+//Tells if a number is a squared number
+int chefasq(std::string istring, std::string ostring) {
+	ostring = (ostring=="NULL") ? "0" : ostring;
+	logger("Recieved as aSquare");
+	
+	int newint = str2int(istring);
+	newint = aSquare(newint);
+
+	if (newint==-1){
+		sl((istring+"is not a square number."));
+		if (ostring=="-1") 
+			return 1;
+		return 0;
+	}
+	else{
+		sl((istring+" is "+ std::to_string(newint) +" squared."));
+		if (newint != str2int(ostring)) {
+			logger("Error: expected root : " + ostring + "\nDerived value : "+ std::to_string(newint));
+			return 0;
+			}
+		return 1;
+		
 	}
 }
