@@ -39,6 +39,14 @@ class deFunct{// Class for holding directory data
 	}
 };
 
+class settings{// Class for storing settings cleanly
+	public:
+	bool use_external = false;
+	bool all_tests = false;
+	bool f_end = false;
+	int testnumber = -1;	
+};
+
 //void init();
 //List of all functions
 //To add to list, add a deFunct type, with args
@@ -59,7 +67,7 @@ void init(){
 std::string help_notice = "Use stuff.											\n \
 -v   : Activates Verbose mode, displays information realtime in terminal.		\n \
 -l   : Sends more information into the log regarding runtime.					\n \
--t   : Given an integer, gets sql test from database and runs it.				\n TODO \
+-t   : Given an integer, gets sql test from database and runs it.				\n \
 -tall: Runs all associated sql tests in related database.						\n TODO \
 -tadd: Adds a given test case to the database.									\n\
 Functions:																		\n \
