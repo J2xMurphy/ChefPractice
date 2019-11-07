@@ -1,9 +1,10 @@
 CC = g++-8
 DEFAULT_GOAL = makeit
+FLAGS = -l sqlite3
 
 makeit:
 	@echo "Main Make..."
-	$(CC) -o main main.cpp
+	$(CC) -o main main.cpp $(FLAGS)
 	@echo "Done!"
 
 clean:
