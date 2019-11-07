@@ -65,7 +65,12 @@ std::vector<testio> getdb(std::string input){
 
 // convert string to integer
 int str2int(std::string input){
-	int output = stoi(input);
+	int output;
+	try {
+		output = stoi(input);
+	}catch(...){
+		return -1;	
+	}
 	return output;
 }
 
@@ -101,7 +106,7 @@ static int testnumbers(void* database, int argc, char** argv, char** azColName)
     return 0; 
 } 
 
-// For use in count* to return the number of ids for an array.
+// For use in count* to return the number of ids for an array. UNUSED
 static int getcount(void* database, int argc, char** argv, char** azColName) 
 {
     return str2int(argv[0]); 

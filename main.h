@@ -37,6 +37,9 @@ class deFunct{// Class for holding directory data
 	functiontype getfunc(){
 		return cusfunc;
 	}
+	std::string read(){
+		return (name+":"+dir);
+	}
 };
 
 class settings{// Class for storing settings cleanly
@@ -68,10 +71,11 @@ std::string help_notice = "Use stuff.											\n \
 -v   : Activates Verbose mode, displays information realtime in terminal.		\n \
 -l   : Sends more information into the log regarding runtime.					\n \
 -t   : Given an integer, gets sql test from database and runs it.				\n \
--tall: Runs all associated sql tests in related database.						\n TODO \
--tadd: Adds a given test case to the database.									\n\
+-tall: Runs all associated sql tests in related database.						\n \
+-tadd: Adds a given test case to the database.									\n TODO\
 Functions:																		\n \
 one  []		  - Test case for no reason											\n \
 b2b  [int]    - calculates bits in bytes										\n \
-pali [string] - calculates whether or not a string is a palindrome.";
+pali [string] - calculates whether or not a string is a palindrome.				\n \
+asq  [int]    - calculates whether or not an int is a square number.";
 #endif

@@ -5,13 +5,13 @@ int main(int argc, char *argv[]){
 	// Temp string in case sql testing is initiated.
 	std::string temp;
 	std::string argstr[argc];
-	deFunct mainarg;
+	deFunct mainarg("NULL","NULL",chef);
 	settings st;
 	// A loop through all the arguments provided to tell which
 	// values are option keys and which are relevant values
-	int i = 0;
-	int ix = 0;
-	int t_pass = 0;
+	unsigned int i = 0;
+	unsigned int ix = 0;
+	unsigned int t_pass = 0;
 	st.use_external = false;
 	std::vector<testio> main_tests;
 	if (argc>1){
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]){
 		logger("Arguments Read.");
 		std::cout << "Verbosity = " << logstats.verbose << std::endl;
 		std::cout << "Logger = " << logstats.dolog << std::endl;
-		logger("<---Begin Function---> " +argstr[ix-2]);
+		logger("<---Begin Function---> " +mainarg.get());
 		
 		// Convert any legal input to testio format
 		if (st.use_external == true){
@@ -77,6 +77,11 @@ int main(int argc, char *argv[]){
 					logEnd();
 					return 0;
 				}
+				if(str2int(argstr[1])>=main_tests.size()){
+					sl("Test ID not found.");
+					logEnd();
+					return 0;
+				}
 				temp_tests.push_back(main_tests[str2int(argstr[1])]);
 				main_tests = temp_tests;
 			}
@@ -84,33 +89,39 @@ int main(int argc, char *argv[]){
 			
 		}else{
 			testio ntio(0,argstr[1],"NULL");
-			if (ix >= 3)
+			if (ix >= 3){
 				ntio.output = argstr[2];
+				ix = 3;
+			}
 			main_tests.push_back(ntio);
+			
 		}
 		
-		logger("ix value:" +std::to_string(ix));
+		logger("ix level:" +std::to_string(ix));
 		// First level argc checking, for single arg functions
 		// A should be case statement for possible arguments.
 		for(testio tio:main_tests){
-			//logger(tio.input);
-			if (ix == 0){
-				sl("No inputs detected.");
-				logEnd();
-				return 0;
-			}
-			else if (ix == 1){
-				sl("No arguments given.");
-				logEnd();
-				return 0;
-			}
-			else if (ix == 2){
-				mainarg.getfunc()(tio.input,tio.output);
-			}
-			else if (ix == 3){
-				t_pass+=mainarg.getfunc()(tio.input,tio.output);
-			}else{
-				
+			logger(tio.input);
+			switch (ix){
+				case 0:// If nothing is passed through args
+					sl("No inputs detected.");
+					logEnd();
+					return 0;
+					break;
+				case 1:// If only the arg selection is given
+					sl("No arguments given.");
+					logEnd();
+					return 0;
+					break;
+				case 2:// Arg Selection + Arg Value,, w/o desired output
+					mainarg.getfunc()(tio.input,tio.output);
+					break;
+				case 3:// Arg Selection + Arg Value, with desired output
+					t_pass+=mainarg.getfunc()(tio.input,tio.output);
+					break;
+				default:// Something given, but unmatching.
+					sl("No valid inputs.");
+					break;
 			}
 		}
 	}else{

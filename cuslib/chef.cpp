@@ -1,7 +1,8 @@
 #include "chef.h"
 //Base function for testing
-void chef(){
-	logger("works");
+int chef(std::string istring, std::string ostring){
+	sl("No valid functions");
+	return 0;
 }
 
 // Handles preprocessing of byte2bit
@@ -10,9 +11,14 @@ int chefb2b(std::string istring, std::string ostring){
 	ostring = (ostring=="NULL") ? "0" : ostring;
 	logger("Recieved as Byte2Bit");
 	int newint = str2int(istring);
-	newint = byte2bit(newint);
-	sl(istring + " bytes are equivalent to " + std::to_string(newint) + " bits of space.");
-	return newint == str2int(ostring);
+	if (newint<0){
+		sl("Invalid number given.");
+		return 0;
+	}
+	int finint = byte2bit(newint);
+	sl(std::to_string(newint) + " bytes are equivalent to " + std::to_string(finint) + " bits of space.");
+	
+	return finint == str2int(ostring);
 }
 
 //Handles preprocessing of palindrome
@@ -39,10 +45,14 @@ int chefpali(std::string istring, std::string ostring){
 //Handles preprocessing of aSquare
 //Tells if a number is a squared number
 int chefasq(std::string istring, std::string ostring) {
-	ostring = (ostring=="NULL") ? "0" : ostring;
+	ostring = (ostring=="NULL") ? "-1" : ostring;
 	logger("Recieved as aSquare");
 	
 	int newint = str2int(istring);
+	if (newint<0){
+		sl("Invalid number given.");
+		return 0;
+	}
 	newint = aSquare(newint);
 
 	if (newint==-1){
@@ -53,7 +63,7 @@ int chefasq(std::string istring, std::string ostring) {
 	}
 	else{
 		sl((istring+" is "+ std::to_string(newint) +" squared."));
-		if (newint != str2int(ostring)) {
+		if ((newint != str2int(ostring)) and (ostring!="-1")) {
 			logger("Error: expected root : " + ostring + "\nDerived value : "+ std::to_string(newint));
 			return 0;
 			}
